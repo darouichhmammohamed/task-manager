@@ -22,7 +22,8 @@
         </div>
       </dl>
     </article>
+    <button (click)="deleteTask()" class="task-delete-button">Delete task</button>
   } @else {
     <p class="task-not-found">Task not found.</p>
   }
-  <button (click)="deleteTask()" class="task-delete-button">Delete task</button>
+</div>

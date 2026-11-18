@@ -43,10 +43,8 @@ export class TaskService {
         return this.tasks().find(task => task.id === id )
     }
     deleteTask(id : number){
-        this.tasksSignal.update((tasks)=>{
-            return tasks.filter(task => task.id !== id);
-
-        })
+        const updatedTasks = this.tasksSignal().filter(task => task.id !== id);
+        this.saveTasks(updatedTasks);
     }
     addTask(title : string , description:string){
         const tasks = this.tasksSignal();
@@ -57,8 +55,12 @@ export class TaskService {
             completed : false,
             createdAt : new Date()
         }];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTasks));
-        this.tasksSignal.set(updatedTasks);
+        this.saveTasks(updatedTasks);
+    }
+
+    private saveTasks(tasks: task[]): void {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+        this.tasksSignal.set(tasks);
     }
 
     private loadTasks(): task[] {
