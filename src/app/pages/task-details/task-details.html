@@ -1,0 +1,28 @@
+<div class="task-detail-container">
+  @if (task(); as currentTask) {
+    <article class="task-detail">
+      <header class="task-detail-header">
+        <h1>{{ currentTask.title }}</h1>
+        <span>{{ currentTask.completed ? 'Completed' : 'In progress' }}</span>
+      </header>
+
+      <section class="task-detail-content">
+        <h2>Description</h2>
+        <p>{{ currentTask.description || 'No description provided.' }}</p>
+      </section>
+
+      <dl class="task-detail-meta">
+        <div>
+          <dt>Task ID</dt>
+          <dd>{{ currentTask.id }}</dd>
+        </div>
+        <div>
+          <dt>Created</dt>
+          <dd>{{ currentTask.createdAt }}</dd>
+        </div>
+      </dl>
+    </article>
+  } @else {
+    <p class="task-not-found">Task not found.</p>
+  }
+  <button (click)="deleteTask()" class="task-delete-button">Delete task</button>

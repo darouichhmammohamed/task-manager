@@ -1,0 +1,47 @@
+<section class="task-form-container">
+  <header class="task-form-header">
+    <h1>Create a task</h1>
+    <p>Enter a title and description for your task.</p>
+  </header>
+
+  <form class="task-form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="e.g. Learn Angular"
+        autocomplete="off"
+        [attr.aria-invalid]="taskForm.controls.title.invalid && taskForm.controls.title.touched"
+        aria-describedby="title-help title-error"
+      />
+      <small id="title-help">At least 3 characters.</small>
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
+        <p id="title-error" class="form-error">A title is required.</p>
+      } @else if (taskForm.controls.title.touched && taskForm.controls.title.hasError('minlength')) {
+        <p id="title-error" class="form-error">The title must be at least 3 characters.</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Describe what needs to be done..."
+        [attr.aria-invalid]="taskForm.controls.description.invalid && taskForm.controls.description.touched"
+        aria-describedby="description-help description-error"
+      ></textarea>
+      <small id="description-help">At least 10 characters.</small>
+      @if (taskForm.controls.description.touched && taskForm.controls.description.hasError('required')) {
+        <p id="description-error" class="form-error">A description is required.</p>
+      } @else if (taskForm.controls.description.touched && taskForm.controls.description.hasError('minlength')) {
+        <p id="description-error" class="form-error">The description must be at least 10 characters.</p>
+      }
+    </div>
+
+    <button type="submit" [disabled]="taskForm.invalid">Create task</button>
+  </form>
+</section>
